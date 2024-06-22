@@ -1,4 +1,4 @@
-name: Deploy Kotlin/wasm to GitHub Pages
+name: Deploy Kotlin/JS to GitHub Pages
 
 on:
   push:
