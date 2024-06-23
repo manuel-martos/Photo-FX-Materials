@@ -19,7 +19,7 @@ fun AssetContainer(
     BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(Color.Red.copy(alpha = 0.5f)),
     ) {
         // Here, we are assuming that ideal screen size is 800x600
         content.invoke(Modifier.scale(max(maxWidth / 800.dp, maxHeight / 600.dp)))
