@@ -19,10 +19,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,99 +47,77 @@ fun FragmentShader(
     vm: FragmentShaderViewModel = viewModel { FragmentShaderViewModel() },
 ) {
     val highlightedPixelSet by vm.highlightedPixelSet.collectAsState()
-    Column(modifier = modifier) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth(),
-        ) {
-            Text(text = "Pixel Coordinates", style = MaterialTheme.typography.titleMedium)
-            Icon(
-                Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = null,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
-            Text(text = "Fragment Shader", style = MaterialTheme.typography.titleMedium)
-            Icon(
-                Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = null,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
-            Text(text = "Pixel Colour", style = MaterialTheme.typography.titleMedium)
-        }
-        BoxWithConstraints {
-            val pixelSize = 1f / (max(xPixels, yPixels) + 2) * min(maxWidth.value, maxHeight.value)
-            Row(modifier = modifier) {
-                AnimatedContent(
-                    targetState = highlightedPixelSet.pixels,
-                    transitionSpec = {
-                        fadeIn(animationSpec = tween(220, delayMillis = 90)).togetherWith(
-                            fadeOut(
-                                animationSpec = tween(90)
-                            )
+    BoxWithConstraints(modifier = modifier) {
+        val pixelSize = 1f / (max(xPixels, yPixels) + 2) * min(maxWidth.value, maxHeight.value)
+        Row {
+            AnimatedContent(
+                targetState = highlightedPixelSet.pixels,
+                transitionSpec = {
+                    fadeIn(animationSpec = tween(220, delayMillis = 90)).togetherWith(
+                        fadeOut(
+                            animationSpec = tween(90)
                         )
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxSize()
-                        .padding(top = pixelSize.dp)
+                    )
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize()
+                    .padding(top = pixelSize.dp)
+            ) {
+                Column(
+                    verticalArrangement = spacedBy(2.dp),
                 ) {
-                    Column(
-                        verticalArrangement = spacedBy(2.dp),
-                    ) {
-                        it.forEach {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier.fillMaxWidth(),
-                            ) {
-                                Text(
-                                    text = "f(${it.x},${it.y}) = ",
-                                    style = MaterialTheme.typography.titleMedium.copy(fontFamily = FontFamily.Monospace)
-                                )
-                                Box(
-                                    modifier = Modifier
-                                        .size(24.dp)
-                                        .background(it.color, shape = CircleShape)
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color.Black,
-                                            shape = CircleShape
-                                        )
-                                )
-                            }
+                    it.forEach {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Text(
+                                text = "f(${it.x},${it.y}) = ",
+                                style = MaterialTheme.typography.titleMedium.copy(fontFamily = FontFamily.Monospace)
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .background(it.color, shape = CircleShape)
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color.Black,
+                                        shape = CircleShape
+                                    )
+                            )
                         }
                     }
                 }
-                Box(
+            }
+            Box(
+                modifier = Modifier
+                    .weight(2f)
+                    .fillMaxSize()
+            ) {
+                ScreenBuffer(
                     modifier = Modifier
-                        .weight(2f)
-                        .fillMaxSize()
-                ) {
-                    ScreenBuffer(
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .drawWithContent {
-                                drawContent()
-                                drawRect(
-                                    Brush.radialGradient(
-                                        0.00f to Color.Transparent,
-                                        0.60f to Color.Transparent,
-                                        0.65f to Color.White,
-                                        center = Offset.Zero,
-                                        radius = sqrt((size.width * size.width) + (size.height * size.height))
-                                    ),
-                                    topLeft = Offset(-size.width * 0.05f, -size.height * 0.05f),
-                                    size = size * 1.1f,
-                                )
-                            },
-                        vm = vm,
-                        xPixels = xPixels,
-                        yPixels = yPixels,
-                        pixelSize = pixelSize * LocalDensity.current.density,
-                    )
-                }
+                        .aspectRatio(1f)
+                        .drawWithContent {
+                            drawContent()
+                            drawRect(
+                                Brush.radialGradient(
+                                    0.00f to Color.Transparent,
+                                    0.60f to Color.Transparent,
+                                    0.65f to Color.White,
+                                    center = Offset.Zero,
+                                    radius = sqrt((size.width * size.width) + (size.height * size.height))
+                                ),
+                                topLeft = Offset(-size.width * 0.05f, -size.height * 0.05f),
+                                size = size * 1.1f,
+                            )
+                        },
+                    vm = vm,
+                    xPixels = xPixels,
+                    yPixels = yPixels,
+                    pixelSize = pixelSize * LocalDensity.current.density,
+                )
             }
         }
     }
