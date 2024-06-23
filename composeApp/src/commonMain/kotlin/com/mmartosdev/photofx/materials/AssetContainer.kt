@@ -22,10 +22,10 @@ fun AssetContainer(
             .fillMaxSize()
             .background(Color.White),
     ) {
-        val scaleWidth = maxWidth / 368.dp
-        val scaleHeight = maxHeight / 224.dp
+        val scaleWidth = maxWidth / 736.dp
+        val scaleHeight = maxHeight / 448.dp
         val scale = max(scaleWidth, scaleHeight)
-        // Here, we are assuming that ideal screen size is 368x224 (mobile size)
+        // Here, we are assuming that ideal screen size is 736x448 (mobile size)
         content.invoke(Modifier.scale(scale))
     }
 }
