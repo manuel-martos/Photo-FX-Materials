@@ -17,7 +17,6 @@ fun main() = application {
             AssetContainer(
                 modifier = Modifier
                     .background(Color.White)
-                    .padding(32.dp),
             ) { modifier ->
                 FragmentShaderContent(modifier)
             }
