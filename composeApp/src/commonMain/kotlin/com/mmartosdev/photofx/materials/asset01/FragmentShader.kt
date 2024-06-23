@@ -58,21 +58,21 @@ fun FragmentShader(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            Text(text = "Pixel Coordinates", style = MaterialTheme.typography.titleLarge)
+            Text(text = "Pixel Coordinates", style = MaterialTheme.typography.titleMedium)
             Icon(
                 Icons.AutoMirrored.Filled.ArrowForward,
                 contentDescription = null,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
-            Text(text = "Fragment Shader", style = MaterialTheme.typography.titleLarge)
+            Text(text = "Fragment Shader", style = MaterialTheme.typography.titleMedium)
             Icon(
                 Icons.AutoMirrored.Filled.ArrowForward,
                 contentDescription = null,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
-            Text(text = "Pixel Colour", style = MaterialTheme.typography.titleLarge)
+            Text(text = "Pixel Colour", style = MaterialTheme.typography.titleMedium)
         }
-        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        BoxWithConstraints {
             val pixelSize = 1f / (max(xPixels, yPixels) + 2) * min(maxWidth.value, maxHeight.value)
             Row(modifier = modifier) {
                 AnimatedContent(
