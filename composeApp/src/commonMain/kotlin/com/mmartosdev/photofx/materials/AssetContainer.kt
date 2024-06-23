@@ -20,22 +20,12 @@ fun AssetContainer(
     BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Red.copy(alpha = 0.5f)),
+            .background(Color.White),
     ) {
-        val scaleWidth = maxWidth / 680.dp
-        val scaleHeight = maxHeight / 404.dp
+        val scaleWidth = maxWidth / 368.dp
+        val scaleHeight = maxHeight / 224.dp
         val scale = max(scaleWidth, scaleHeight)
-        Text(
-            text = """
-                        maxWidth = $maxWidth
-                        maxHeight = $maxHeight
-                        scaleWidth = $scaleWidth
-                        scaleHeight = $scaleHeight
-                        scale = $scale
-                    """.trimIndent(),
-            modifier = Modifier.align(Alignment.BottomStart),
-        )
-        // Here, we are assuming that ideal screen size is 800x600
+        // Here, we are assuming that ideal screen size is 368x224 (mobile size)
         content.invoke(Modifier.scale(scale))
     }
 }
