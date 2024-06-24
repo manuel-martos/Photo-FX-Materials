@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -47,9 +48,15 @@ fun FragmentShader(
     vm: FragmentShaderViewModel = viewModel { FragmentShaderViewModel() },
 ) {
     val highlightedPixelSet by vm.highlightedPixelSet.collectAsState()
-    BoxWithConstraints(modifier = modifier) {
-        val pixelSize = 1f / (max(xPixels, yPixels) + 2) * min(maxWidth.value, maxHeight.value)
-        Row {
+    BoxWithConstraints(
+        contentAlignment = Alignment.Center,
+        modifier = modifier,
+    ) {
+        val pixelSize = 1f / (max(xPixels, yPixels) + 3) * min(maxWidth.value, maxHeight.value)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxHeight(),
+        ) {
             AnimatedContent(
                 targetState = highlightedPixelSet.pixels,
                 transitionSpec = {
@@ -62,7 +69,7 @@ fun FragmentShader(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
-                    .padding(top = pixelSize.dp)
+                    .padding(top = (2f * pixelSize).dp)
             ) {
                 Column(
                     verticalArrangement = spacedBy(2.dp),
@@ -91,34 +98,30 @@ fun FragmentShader(
                     }
                 }
             }
-            Box(
+            ScreenBuffer(
                 modifier = Modifier
                     .weight(2f)
                     .fillMaxSize()
-            ) {
-                ScreenBuffer(
-                    modifier = Modifier
-                        .aspectRatio(1f)
-                        .drawWithContent {
-                            drawContent()
-                            drawRect(
-                                Brush.radialGradient(
-                                    0.00f to Color.Transparent,
-                                    0.60f to Color.Transparent,
-                                    0.65f to Color.White,
-                                    center = Offset.Zero,
-                                    radius = sqrt((size.width * size.width) + (size.height * size.height))
-                                ),
-                                topLeft = Offset(-size.width * 0.05f, -size.height * 0.05f),
-                                size = size * 1.1f,
-                            )
-                        },
-                    vm = vm,
-                    xPixels = xPixels,
-                    yPixels = yPixels,
-                    pixelSize = pixelSize * LocalDensity.current.density,
-                )
-            }
+                    .aspectRatio(1f)
+                    .drawWithContent {
+                        drawContent()
+                        drawRect(
+                            Brush.radialGradient(
+                                0.00f to Color.Transparent,
+                                0.60f to Color.Transparent,
+                                0.65f to Color.White,
+                                center = Offset.Zero,
+                                radius = sqrt((size.width * size.width) + (size.height * size.height))
+                            ),
+                            topLeft = Offset(-size.width * 0.05f, -size.height * 0.05f),
+                            size = size * 1.1f,
+                        )
+                    },
+                vm = vm,
+                xPixels = xPixels,
+                yPixels = yPixels,
+                pixelSize = pixelSize * LocalDensity.current.density,
+            )
         }
     }
 }
