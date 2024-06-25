@@ -130,8 +130,8 @@ fun FragmentShader(
                             drawRect(
                                 Brush.radialGradient(
                                     0.00f to Color.Transparent,
-                                    0.60f to Color.Transparent,
-                                    0.65f to Color.White,
+                                    0.57f to Color.Transparent,
+                                    0.62f to Color.White,
                                     center = Offset.Zero,
                                     radius = sqrt((size.width * size.width) + (size.height * size.height))
                                 ),

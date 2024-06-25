@@ -3,7 +3,6 @@ package com.mmartosdev.photofx.materials.asset01
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,8 +18,6 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlin.math.max
-import kotlin.math.min
 
 @Composable
 fun ScreenBuffer(
