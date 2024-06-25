@@ -20,6 +20,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,80 +51,100 @@ fun FragmentShader(
     vm: FragmentShaderViewModel = viewModel { FragmentShaderViewModel() },
 ) {
     val highlightedPixelSet by vm.highlightedPixelSet.collectAsState()
-    BoxWithConstraints(
-        contentAlignment = Alignment.Center,
-        modifier = modifier,
-    ) {
-        val pixelSize = 1f / (max(xPixels, yPixels) + 3) * min(maxWidth.value, maxHeight.value)
+    Column(modifier = modifier) {
         Row(
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxHeight(),
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
         ) {
-            AnimatedContent(
-                targetState = highlightedPixelSet.pixels,
-                transitionSpec = {
-                    fadeIn(animationSpec = tween(220, delayMillis = 90)).togetherWith(
-                        fadeOut(
-                            animationSpec = tween(90)
-                        )
-                    )
-                },
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize()
-                    .padding(top = (2f * pixelSize).dp)
+            Text(text = "Pixel Coordinates", style = MaterialTheme.typography.titleLarge)
+            Icon(
+                Icons.AutoMirrored.Filled.ArrowForward,
+                contentDescription = null,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+            Text(text = "Fragment Shader", style = MaterialTheme.typography.titleLarge)
+            Icon(
+                Icons.AutoMirrored.Filled.ArrowForward,
+                contentDescription = null,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+            Text(text = "Pixel Colour", style = MaterialTheme.typography.titleLarge)
+        }
+        BoxWithConstraints(
+            contentAlignment = Alignment.Center,
+        ) {
+            val pixelSize = 1f / (max(xPixels, yPixels) + 3) * min(maxWidth.value, maxHeight.value)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxHeight(),
             ) {
-                Column(
-                    verticalArrangement = spacedBy(2.dp),
+                AnimatedContent(
+                    targetState = highlightedPixelSet.pixels,
+                    transitionSpec = {
+                        fadeIn(animationSpec = tween(220, delayMillis = 90)).togetherWith(
+                            fadeOut(
+                                animationSpec = tween(90)
+                            )
+                        )
+                    },
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize()
+                        .padding(top = (2f * pixelSize).dp)
                 ) {
-                    it.forEach {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            Text(
-                                text = "f(${it.x},${it.y}) = ",
-                                style = MaterialTheme.typography.titleMedium.copy(fontFamily = FontFamily.Monospace)
-                            )
-                            Box(
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .background(it.color, shape = CircleShape)
-                                    .border(
-                                        width = 1.dp,
-                                        color = Color.Black,
-                                        shape = CircleShape
-                                    )
-                            )
+                    Column(
+                        verticalArrangement = spacedBy(2.dp),
+                    ) {
+                        it.forEach {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier.fillMaxWidth(),
+                            ) {
+                                Text(
+                                    text = "f(${it.x},${it.y}) = ",
+                                    style = MaterialTheme.typography.titleMedium.copy(fontFamily = FontFamily.Monospace)
+                                )
+                                Box(
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .background(it.color, shape = CircleShape)
+                                        .border(
+                                            width = 1.dp,
+                                            color = Color.Black,
+                                            shape = CircleShape
+                                        )
+                                )
+                            }
                         }
                     }
                 }
+                ScreenBuffer(
+                    modifier = Modifier
+                        .weight(2f)
+                        .fillMaxSize()
+                        .aspectRatio(1f)
+                        .drawWithContent {
+                            drawContent()
+                            drawRect(
+                                Brush.radialGradient(
+                                    0.00f to Color.Transparent,
+                                    0.60f to Color.Transparent,
+                                    0.65f to Color.White,
+                                    center = Offset.Zero,
+                                    radius = sqrt((size.width * size.width) + (size.height * size.height))
+                                ),
+                                topLeft = Offset(-size.width * 0.05f, -size.height * 0.05f),
+                                size = size * 1.1f,
+                            )
+                        },
+                    vm = vm,
+                    xPixels = xPixels,
+                    yPixels = yPixels,
+                    pixelSize = pixelSize * LocalDensity.current.density,
+                )
             }
-            ScreenBuffer(
-                modifier = Modifier
-                    .weight(2f)
-                    .fillMaxSize()
-                    .aspectRatio(1f)
-                    .drawWithContent {
-                        drawContent()
-                        drawRect(
-                            Brush.radialGradient(
-                                0.00f to Color.Transparent,
-                                0.60f to Color.Transparent,
-                                0.65f to Color.White,
-                                center = Offset.Zero,
-                                radius = sqrt((size.width * size.width) + (size.height * size.height))
-                            ),
-                            topLeft = Offset(-size.width * 0.05f, -size.height * 0.05f),
-                            size = size * 1.1f,
-                        )
-                    },
-                vm = vm,
-                xPixels = xPixels,
-                yPixels = yPixels,
-                pixelSize = pixelSize * LocalDensity.current.density,
-            )
         }
     }
 }
