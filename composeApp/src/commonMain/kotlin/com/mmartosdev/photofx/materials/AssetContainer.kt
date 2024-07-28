@@ -1,6 +1,7 @@
 package com.mmartosdev.photofx.materials
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.requiredSize
@@ -15,7 +16,7 @@ import kotlin.math.min
 @Composable
 fun AssetContainer(
     modifier: Modifier = Modifier,
-    content: @Composable (Modifier) -> Unit,
+    content: @Composable () -> Unit,
 ) {
     BoxWithConstraints(
         contentAlignment = Alignment.Center,
@@ -23,13 +24,14 @@ fun AssetContainer(
             .fillMaxSize()
             .background(Color.White),
     ) {
-        val scale = min(maxWidth / 800.dp, maxHeight / 600.dp)
         // Here, we are assuming that ideal screen size is 800x600
-        content.invoke(
+        val scale = min(maxWidth / 800.dp, maxHeight / 600.dp)
+        Box(
             Modifier
-                .fillMaxSize()
                 .requiredSize(800.dp, 600.dp)
                 .scale(scale)
-        )
+        ) {
+            content.invoke()
+        }
     }
 }
