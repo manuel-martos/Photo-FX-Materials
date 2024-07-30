@@ -15,7 +15,7 @@ import org.jetbrains.skia.Shader
 
 actual fun Modifier.shader(
     shader: String,
-    uniformsBlock: ShaderUniformProvider.() -> Unit,
+    uniformsBlock: (ShaderUniformProvider.() -> Unit)?,
 ): Modifier = this then composed {
     val runtimeShaderBuilder = remember {
         RuntimeShaderBuilder(
@@ -29,7 +29,7 @@ actual fun Modifier.shader(
         clip = true
         renderEffect = ImageFilter.makeShader(
             shader = runtimeShaderBuilder
-                .apply { shaderUniformProvider.uniformsBlock() }
+                .apply { uniformsBlock?.invoke(shaderUniformProvider) }
                 .makeShader(),
             crop = null,
         ).asComposeRenderEffect()

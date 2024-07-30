@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Shader
 
 expect fun Modifier.shader(
     shader: String,
-    uniformsBlock: ShaderUniformProvider.() -> Unit,
+    uniformsBlock: (ShaderUniformProvider.() -> Unit)? = null,
 ): Modifier
 
 interface ShaderUniformProvider {

@@ -1,4 +1,4 @@
-package com.mmartosdev.photofx.materials.asset03
+package com.mmartosdev.photofx.materials.asset04
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

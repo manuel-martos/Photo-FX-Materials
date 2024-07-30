@@ -14,7 +14,8 @@ import com.mmartosdev.photofx.materials.AssetGallery
 import com.mmartosdev.photofx.materials.AssetType
 import com.mmartosdev.photofx.materials.asset01.FragmentShaderContent
 import com.mmartosdev.photofx.materials.asset02.LinearGradientContent
-import com.mmartosdev.photofx.materials.asset03.ShaderAsUniformContent
+import com.mmartosdev.photofx.materials.asset03.StripeContent
+import com.mmartosdev.photofx.materials.asset04.ShaderAsUniformContent
 import kotlinx.browser.window
 import org.jetbrains.skiko.wasm.onWasmReady
 import org.w3c.dom.url.URLSearchParams
@@ -33,6 +34,9 @@ fun main() {
                         AssetContainer { LinearGradientContent() }
 
                     AssetType.ASSET03 ->
+                        AssetContainer { StripeContent() }
+
+                    AssetType.ASSET04 ->
                         AssetContainer { ShaderAsUniformContent() }
 
                     null ->
@@ -52,5 +56,6 @@ private fun String.toAssetType(): AssetType? = when (this) {
     "asset01" -> AssetType.ASSET01
     "asset02" -> AssetType.ASSET02
     "asset03" -> AssetType.ASSET03
+    "asset04" -> AssetType.ASSET04
     else -> null
 }

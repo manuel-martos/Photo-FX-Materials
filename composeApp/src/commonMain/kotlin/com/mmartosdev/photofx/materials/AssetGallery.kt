@@ -14,12 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mmartosdev.photofx.materials.asset01.FragmentShaderContent
 import com.mmartosdev.photofx.materials.asset02.LinearGradientContent
-import com.mmartosdev.photofx.materials.asset03.ShaderAsUniformContent
+import com.mmartosdev.photofx.materials.asset03.StripeContent
+import com.mmartosdev.photofx.materials.asset04.ShaderAsUniformContent
 
 enum class AssetType {
     ASSET01,
     ASSET02,
     ASSET03,
+    ASSET04,
 }
 
 @Composable
@@ -42,12 +44,13 @@ fun AssetGallery(
                     .aspectRatio(16f / 9f)
             ) {
                 AssetContainer(
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(16.dp)
                 ) {
                     when (assetType) {
                         AssetType.ASSET01 -> FragmentShaderContent()
                         AssetType.ASSET02 -> LinearGradientContent()
-                        AssetType.ASSET03 -> ShaderAsUniformContent()
+                        AssetType.ASSET03 -> StripeContent()
+                        AssetType.ASSET04 -> ShaderAsUniformContent()
                     }
                 }
             }

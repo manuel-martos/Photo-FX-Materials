@@ -17,7 +17,8 @@ import com.mmartosdev.photofx.materials.AssetGallery
 import com.mmartosdev.photofx.materials.AssetType
 import com.mmartosdev.photofx.materials.asset01.FragmentShaderContent
 import com.mmartosdev.photofx.materials.asset02.LinearGradientContent
-import com.mmartosdev.photofx.materials.asset03.ShaderAsUniformContent
+import com.mmartosdev.photofx.materials.asset03.StripeContent
+import com.mmartosdev.photofx.materials.asset04.ShaderAsUniformContent
 
 fun main() = application {
     val windowState = rememberWindowState(width = 800.dp, height = 600.dp)
@@ -33,6 +34,9 @@ fun main() = application {
                         AssetContainer { LinearGradientContent() }
 
                     AssetType.ASSET03 ->
+                        AssetContainer { StripeContent() }
+
+                    AssetType.ASSET04 ->
                         AssetContainer { ShaderAsUniformContent() }
 
                     null ->
